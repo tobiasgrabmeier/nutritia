@@ -142,9 +142,7 @@ module.exports = function(controller) {
                     });
 
 
-            convo.say('I would suggest chicken and vegetables - maybe BBQ style with some colleagues? :) Enjoy!', {
-                attachment: attachment,
-            });
+            convo.say('I would suggest chicken and vegetables - maybe BBQ style with some colleagues? :) Enjoy!');
 
             convo.next();
           }
