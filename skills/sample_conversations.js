@@ -33,7 +33,7 @@ module.exports = function(controller) {
     controller.hears(['sample_get_started_payload'], 'message_received', function(bot, message) {
 
           var askAge = function(response, convo) {
-            convo.say('Hey there! I am Nutritia, your personal nutrition coach. If you eat a healthy meal tonight, I am happy :) To help you suggest a healthy dinner I would like to ask you five questions about you:');
+            convo.say('Hey there! I am Nutritia, your personal nutrition coach. If you eat a healthy meal tonight, I am happy :) To help you suggest a healthy dinner I would like to ask you some questions:');
             convo.ask('What is your age?', function(response, convo) {
               convo.say('Awesome. ' + response.text + ' years young :)');
               askGender(response, convo);
@@ -98,19 +98,41 @@ module.exports = function(controller) {
           var askWeight = function(response, convo) {
             convo.ask('What\'s your weight (in kg)?', function(response, convo) {
               convo.say('Perfect.');
-              tellResults(response, convo);
+              tellDAC(response, convo);
               convo.next();
             },{key: 'weight'});
           }
 
-          var tellResults = function(response, convo) {
+          var tellDAC = function(response, convo) {
 
             var data = convo.extractResponses();
             var dac = calculate_dac(data.age, data.gender, data.height, data.weight);
 
             convo.say('So your daily amount of calories should be around ' + dac);
+            askBreakfast(response, convo);
             convo.next();
 
+          }
+
+          var askBreakfast = function(response, convo) {
+            convo.ask('In order to suggest you the perfect dinner I would like to know what you already ate today. What did you have for breakfast', function(response, convo) {
+              askLunch(response, convo);
+              convo.next();
+            },{key: 'breakfast'});
+          }
+          var askLunch = function(response, convo) {
+            convo.ask('Sounds delicious! And for lunch? ;)', function(response, convo) {
+              convo.say('Roger that.');
+              tellSuggestion(response, convo);
+              convo.next();
+            },{key: 'lunch'});
+          }
+
+          var tellSuggestion = function(response, covo) {
+            var data = convo.extractResponses();
+            convo.say('Alright. ' + data.breakfast + ' and ' + data.lunch + 'sounds like you ate mostly carbohydrates. Therefore, I recommend you to eat more proteins and healthy fats tonight and only drink water.');
+            convo.say('I would suggest chicken and vegetables - maybe in an outside BBQ with some colleagues? :) Enjoy!');
+            convo.next();
           }
 
           bot.startConversation(message, function(response, convo){
