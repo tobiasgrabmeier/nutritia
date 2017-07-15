@@ -9,6 +9,32 @@ through the conversation are chosen based on the user's response.
 
 */
 
+function calculate_bmr(gender, weight, age, height) {
+
+  var bmr;
+
+  if(gender == 'male') {
+
+      bmr = 66.5 + 13.7 * weight + 5 * height - 6.8 * age);
+
+  } else if (gender == 'female') {
+
+      bmr = 665 + 9.6 * weight + 1.8 * height - 4.7 * age);
+
+  }
+
+  return bmr;
+
+}
+
+function calculate_dac(bmr, pal) {
+
+  return bmr * pal;
+
+}
+
+
+
 module.exports = function(controller) {
 
     controller.hears(['start'], 'message_received', function(bot, message) {
