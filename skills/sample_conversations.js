@@ -48,6 +48,14 @@ module.exports = function(controller) {
                 convo.next();
 
             });
+            convo.ask('Are you female or male?', function(response, convo) {
+
+                convo.say('Alright');
+                convo.next();
+
+            });
+
+
         });
 
     });
