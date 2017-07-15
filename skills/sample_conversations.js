@@ -79,7 +79,7 @@ module.exports = function(controller) {
                 payload: 'live_healthy'
               }]
             }, function(response, convo) {
-              convo.say('\u1F4AA');
+              convo.say('Nice :)');
               askHeight(response, convo);
 
               convo.next();
@@ -128,7 +128,7 @@ module.exports = function(controller) {
             },{key: 'lunch'});
           }
 
-          var tellSuggestion = function(response, covo) {
+          var tellSuggestion = function(response, convo) {
             var data = convo.extractResponses();
             convo.say('Alright. ' + data.breakfast + ' and ' + data.lunch + 'sounds like you ate mostly carbohydrates. Therefore, I recommend you to eat more proteins and healthy fats tonight and only drink water.');
             convo.say('I would suggest chicken and vegetables - maybe in an outside BBQ with some colleagues? :) Enjoy!');
