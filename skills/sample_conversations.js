@@ -132,28 +132,17 @@ module.exports = function(controller) {
             var data = convo.extractResponses();
             convo.say('Alright. ' + data.breakfast + ' and ' + data.lunch + ' sounds like you ate mostly carbohydrates. Therefore, I would recommend more proteins and healthy fats tonight.');
 
-            var attachment = {
-                'type':'template',
-                'payload':{
-                    'template_type':'generic',
-                    'elements':[
-                        {
-                            'title':'Roasted chicken breast with Italian vegetables',
-                            'image_url':'http://witbanknews.sites.caxton.co.za/wp-content/uploads/sites/105/2014/09/DSC_0545-1024x685.jpg',
-                            'subtitle':'A delicious and healthy treat',
-                            'buttons':[
-                                {
-                                'type':'postback',
-                                'title':'Get recipe',
-                                'payload':'chicken'
-                                }
-                            ]
+            convo.say({
+                      attachment: {
+                        type: 'image',
+                        payload: {
+                          url: 'http://witbanknews.sites.caxton.co.za/wp-content/uploads/sites/105/2014/09/DSC_0545-1024x685.jpg',
                         },
-                    ]
-                }
-            };
+                      },
+                    });
 
-            convo.reply('I would suggest chicken and vegetables - maybe BBQ style with some colleagues? :) Enjoy!', {
+
+            convo.say('I would suggest chicken and vegetables - maybe BBQ style with some colleagues? :) Enjoy!', {
                 attachment: attachment,
             });
 
