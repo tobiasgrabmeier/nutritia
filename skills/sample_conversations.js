@@ -107,14 +107,13 @@ module.exports = function(controller) {
 
           bot.startConversation(message, function(response, convo){
 
+            askAge(response, convo);
             convo.on('end', function(convo) {
               if (convo.successful()) {
                 var user = convo.context.user;
                 var data = convo.extractResponses();
               console.log('Lests see data: ', data);
             }
-
-            askAge(response, convo);
 
           });
 
