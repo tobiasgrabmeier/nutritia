@@ -84,7 +84,7 @@ module.exports = function(controller) {
                 payload: 'live_healthy'
               }]
             }, function(response, convo) {
-              convo.say('\U+1F4AA');
+              convo.say('\u1F4AA');
               askHeight(response, convo);
 
               convo.next();
@@ -94,7 +94,7 @@ module.exports = function(controller) {
           var askHeight = function(response, convo) {
             convo.ask('What size are you (in cm)?', function(response, convo) {
               convo.say('Ok. Almost there :)');
-              askSize(response, convo);
+              askWeight(response, convo);
               convo.next();
             });
           }
