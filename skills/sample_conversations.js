@@ -108,7 +108,7 @@ module.exports = function(controller) {
             var data = convo.extractResponses();
             var dac = calculate_dac(data.age, data.gender, data.height, data.weight);
 
-            convo.say('So your daily amount of calories should be around ' + dac);
+            convo.say('So you need ' + dac + ' kcal per day.');
             askBreakfast(response, convo);
             convo.next();
 
