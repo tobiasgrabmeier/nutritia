@@ -40,7 +40,7 @@ module.exports = function(controller) {
     controller.hears(['sample_get_started_payload'], 'message_received', function(bot, message) {
 
         bot.startConversation(message, function(err, convo) {
-            convo.say('Hey there! I am Nutritia, your personal nutrition coach. If you eat better at the end of the day, I am happy :) To help you suggest a healthy dinner I would like to ask you five questions about you:');
+            convo.say('Hey there! I am Nutritia, your personal nutrition coach. If you eat a healthy meal tonight, I am happy :) To help you suggest a healthy dinner I would like to ask you five questions about you:');
 
             convo.ask('What is your age?', function(response, convo) {
 
