@@ -9,25 +9,20 @@ through the conversation are chosen based on the user's response.
 
 */
 
-function calculate_bmr(gender, weight, age, height) {
+function calculate_dac(age, gender, height, weight) {
 
   var bmr;
+  var pal = 1.2;
 
-  if(gender == 'male') {
+  if(gender == 'Male') {
 
       bmr = 66.5 + 13.7 * weight + 5 * height - 6.8 * age;
 
-  } else if (gender == 'female') {
+  } else if (gender == 'Female') {
 
       bmr = 665 + 9.6 * weight + 1.8 * height - 4.7 * age;
 
   }
-
-  return bmr;
-
-}
-
-function calculate_dac(bmr, pal) {
 
   return bmr * pal;
 
@@ -43,7 +38,7 @@ module.exports = function(controller) {
               convo.say('Awesome. ' + response.text + ' years young :)');
               askGender(response, convo);
               convo.next();
-            });
+            },{key: 'age'});
           }
 
           var askGender = function(response, convo) {
@@ -63,7 +58,8 @@ module.exports = function(controller) {
 
               askGoal(response, convo);
               convo.next();
-            });
+            },
+            {key: 'gender'});
           }
 
           var askGoal = function(response, convo) {
@@ -87,7 +83,8 @@ module.exports = function(controller) {
               askHeight(response, convo);
 
               convo.next();
-            });
+            },
+            {key: 'goal'});
           }
 
           var askHeight = function(response, convo) {
@@ -95,14 +92,25 @@ module.exports = function(controller) {
               convo.say('Ok. Almost there :)');
               askWeight(response, convo);
               convo.next();
-            });
+            },{key: 'height'});
           }
 
           var askWeight = function(response, convo) {
             convo.ask('What\'s your weight (in kg)?', function(response, convo) {
               convo.say('Perfect.');
+              tellResults(response, convo);
               convo.next();
-            });
+            },{key: 'weight'});
+          }
+
+          var tellResults = function(response, convo) {
+
+            var data = convo.extractResponses();
+            var dac = calculate_dac(data.age, data.gender, data.height, data.weight);
+
+            convo.say('So your daily amount of calories should be around ' + dac);
+            convo.next();
+
           }
 
           bot.startConversation(message, function(response, convo){
@@ -112,6 +120,8 @@ module.exports = function(controller) {
               if (convo.successful()) {
                 var user = convo.context.user;
                 var data = convo.extractResponses();
+
+
               console.log('Lests see data: ', data);
             }
 
