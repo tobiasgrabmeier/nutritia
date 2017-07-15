@@ -130,16 +130,33 @@ module.exports = function(controller) {
 
           var tellSuggestion = function(response, convo) {
             var data = convo.extractResponses();
-            convo.say('Alright. ' + data.breakfast + ' and ' + data.lunch + 'sounds like you ate mostly carbohydrates. Therefore, I recommend you to eat more proteins and healthy fats tonight and only drink water.');
-            convo.say({
-              type: 'image',
-              payload: {
-                url: 'https://cdn.glitch.com/bffaa9ee-9c4f-4cd2-9167-0c5e6220014a%2Fchickenbbq.jpg?1500124128749',
-                is_reusable:false
-              }
+            convo.say('Alright. ' + data.breakfast + ' and ' + data.lunch + ' sounds like you ate mostly carbohydrates. Therefore, I would recommend more proteins and healthy fats tonight.');
+
+            var attachment = {
+                'type':'template',
+                'payload':{
+                    'template_type':'generic',
+                    'elements':[
+                        {
+                            'title':'Roasted chicken breast with Italian vegetables',
+                            'image_url':'https://cdn.glitch.com/bffaa9ee-9c4f-4cd2-9167-0c5e6220014a%2Fchickenbbq.jpg?1500124128749',
+                            'subtitle':'A delicious and healthy treat',
+                            'buttons':[
+                                {
+                                'type':'postback',
+                                'title':'Get recipe',
+                                'payload':'chicken'
+                                }
+                            ]
+                        },
+                    ]
+                }
+            };
+
+            convo.say('I would suggest chicken and vegetables - maybe BBQ style with some colleagues? :) Enjoy!', {
+                attachment: attachment,
             });
 
-            convo.say('I would suggest chicken and vegetables - maybe BBQ style with some colleagues? :) Enjoy!');
             convo.next();
           }
 
