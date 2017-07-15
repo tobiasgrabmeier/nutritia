@@ -153,7 +153,7 @@ module.exports = function(controller) {
                 }
             };
 
-            convo.say('I would suggest chicken and vegetables - maybe BBQ style with some colleagues? :) Enjoy!', {
+            convo.reply('I would suggest chicken and vegetables - maybe BBQ style with some colleagues? :) Enjoy!', {
                 attachment: attachment,
             });
 
