@@ -24,7 +24,7 @@ function calculate_dac(age, gender, height, weight) {
 
   }
 
-  return math.ceil(bmr * pal);
+  return Math.ceil(bmr * pal);
 
 }
 
