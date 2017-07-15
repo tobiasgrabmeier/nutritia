@@ -40,19 +40,35 @@ module.exports = function(controller) {
     controller.hears(['sample_get_started_payload'], 'message_received', function(bot, message) {
 
         bot.startConversation(message, function(err, convo) {
+
+            var age;
+            var gender;
+            var height;
+            var weight;
+
             convo.say('Hey there! I am Nutritia, your personal nutrition coach. If you eat a healthy meal tonight, I am happy :) To help you suggest a healthy dinner I would like to ask you five questions about you:');
 
             convo.ask('What is your age?', function(response, convo) {
 
-                convo.say('Thanks - ' + response.text + ' years young!');
+                age = response.text;
                 convo.next();
 
             });
-            convo.ask('Are you female or male?', function(response, convo) {
 
-                convo.say('Alright');
+            convo.ask({
+              text: 'Thanks - ' + age + ' years young. Are you female or male?',
+              quick_replies: [{
+                content_type: 'text',
+                title: 'Female',
+                payload: 'female'
+              },{
+                content_type: 'text',
+                title: 'Male',
+                payload: 'male'
+              }]
+            }, function(response, convo) {
+                gender = response.text;
                 convo.next();
-
             });
 
 
