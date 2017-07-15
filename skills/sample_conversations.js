@@ -139,7 +139,7 @@ module.exports = function(controller) {
                     'elements':[
                         {
                             'title':'Roasted chicken breast with Italian vegetables',
-                            'image_url':'https://cdn.glitch.com/bffaa9ee-9c4f-4cd2-9167-0c5e6220014a%2Fchickenbbq.jpg?1500124128749',
+                            'image_url':'http://witbanknews.sites.caxton.co.za/wp-content/uploads/sites/105/2014/09/DSC_0545-1024x685.jpg',
                             'subtitle':'A delicious and healthy treat',
                             'buttons':[
                                 {
