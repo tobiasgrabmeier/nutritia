@@ -33,8 +33,6 @@ function calculate_dac(bmr, pal) {
 
 }
 
-
-
 module.exports = function(controller) {
 
     controller.hears(['sample_get_started_payload'], 'message_received', function(bot, message) {
@@ -62,6 +60,7 @@ module.exports = function(controller) {
               }]
             }, function(response, convo) {
               convo.say('Ok.')
+
               askGoal(response, convo);
               convo.next();
             });
@@ -92,7 +91,7 @@ module.exports = function(controller) {
           }
 
           var askHeight = function(response, convo) {
-            convo.ask('What size are you (in cm)?', function(response, convo) {
+            convo.ask('How tall are you (in cm)?', function(response, convo) {
               convo.say('Ok. Almost there :)');
               askWeight(response, convo);
               convo.next();
@@ -100,16 +99,27 @@ module.exports = function(controller) {
           }
 
           var askWeight = function(response, convo) {
-            convo.ask('What\'s your weight?', function(response, convo) {
+            convo.ask('What\'s your weight (in kg)?', function(response, convo) {
               convo.say('Perfect.');
-
-              debug(convo.extractResponses());
-
               convo.next();
             });
           }
 
-          bot.startConversation(message, askAge);
+          bot.startConversation(message, function(response, convo){
+
+            convo.on('end', function(convo) {
+              if (convo.successful()) {
+                var user = convo.context.user;
+                var data = convo.extractResponses();
+              console.log('Lests see data: ', data);
+            }
+
+            askAge(response, convo);
+
+          });
+
+
+	});
 
 
     });
