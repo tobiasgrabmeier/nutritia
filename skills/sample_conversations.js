@@ -50,7 +50,7 @@ module.exports = function(controller) {
 
           var askGender = function(response, convo) {
             convo.ask({
-              text: 'Thanks - ' + age + ' years young. Are you female or male?',
+              text: 'Are you female or male?',
               quick_replies: [{
                 content_type: 'text',
                 title: 'Female',
