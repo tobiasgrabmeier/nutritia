@@ -33,8 +33,8 @@ module.exports = function(controller) {
     controller.hears(['sample_get_started_payload'], 'message_received', function(bot, message) {
 
           var askAge = function(response, convo) {
-            convo.say('Hey there! I am Nutritia, your personal nutrition coach. If you eat a healthy meal tonight, I am happy :) To help you suggest a healthy dinner I would like to ask you some questions:');
-            convo.ask('What is your age?', function(response, convo) {
+            convo.say('Hey there! I am Nutritia, your personal nutrition coach. If I can help you to find a healthy meal for tonight, I am happy :) In order to do that I would like to ask you some questions:');
+            convo.ask('How old are you?', function(response, convo) {
               convo.say('Awesome. ' + response.text + ' years young :)');
               askGender(response, convo);
               convo.next();
@@ -115,7 +115,7 @@ module.exports = function(controller) {
           }
 
           var askBreakfast = function(response, convo) {
-            convo.ask('In order to suggest you the perfect dinner I would like to know what you already ate today. What did you have for breakfast', function(response, convo) {
+            convo.ask('In order to suggest you the perfect dinner I would like to know what you already ate today. What did you have for breakfast?', function(response, convo) {
               askLunch(response, convo);
               convo.next();
             },{key: 'breakfast'});
@@ -131,7 +131,15 @@ module.exports = function(controller) {
           var tellSuggestion = function(response, convo) {
             var data = convo.extractResponses();
             convo.say('Alright. ' + data.breakfast + ' and ' + data.lunch + 'sounds like you ate mostly carbohydrates. Therefore, I recommend you to eat more proteins and healthy fats tonight and only drink water.');
-            convo.say('I would suggest chicken and vegetables - maybe in an outside BBQ with some colleagues? :) Enjoy!');
+            convo.say({
+              type: 'image',
+              payload: {
+                url: 'https://cdn.glitch.com/bffaa9ee-9c4f-4cd2-9167-0c5e6220014a%2Fchickenbbq.jpg?1500124128749',
+                is_reusable:false
+              }
+            });
+
+            convo.say('I would suggest chicken and vegetables - maybe BBQ style with some colleagues? :) Enjoy!');
             convo.next();
           }
 
