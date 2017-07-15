@@ -39,22 +39,16 @@ module.exports = function(controller) {
 
     controller.hears(['sample_get_started_payload'], 'message_received', function(bot, message) {
 
-        bot.startConversation(message, function(err, convo) {
-
-            var age;
-            var gender;
-            var height;
-            var weight;
-
+          var askAge = function(response, convo) {
             convo.say('Hey there! I am Nutritia, your personal nutrition coach. If you eat a healthy meal tonight, I am happy :) To help you suggest a healthy dinner I would like to ask you five questions about you:');
-
             convo.ask('What is your age?', function(response, convo) {
-
-                age = response.text;
-                convo.next();
-
+              convo.say('Awesome. ' + response.text + ' years young :)');
+              askSize(response, convo);
+              convo.next();
             });
+          }
 
+          var askGender = function(response, convo) {
             convo.ask({
               text: 'Thanks - ' + age + ' years young. Are you female or male?',
               quick_replies: [{
@@ -67,12 +61,56 @@ module.exports = function(controller) {
                 payload: 'male'
               }]
             }, function(response, convo) {
-                gender = response.text;
-                convo.next();
+              convo.say('Ok.')
+              askGoal(response, convo);
+              convo.next();
             });
+          }
 
+          var askGoal = function(response, convo) {
+            convo.ask({
+              text: 'What do you want to achieve?',
+              quick_replies: [{
+                content_type: 'text',
+                title: 'Loose weight',
+                payload: 'loose_weight'
+              },{
+                content_type: 'text',
+                title: 'Build muscle',
+                payload: 'build_muscle'
+              },{
+                content_type: 'text',
+                title: 'Just live healty',
+                payload: 'live_healthy'
+              }]
+            }, function(response, convo) {
+              convo.say('\U+1F4AA');
+              askHeight(response, convo);
 
-        });
+              convo.next();
+            });
+          }
+
+          var askHeight = function(response, convo) {
+            convo.ask('What size are you (in cm)?', function(response, convo) {
+              convo.say('Ok. Almost there :)');
+              askSize(response, convo);
+              convo.next();
+            });
+          }
+
+          var askWeight = function(response, convo) {
+            convo.ask('What\'s your weight?', function(response, convo) {
+              convo.say('Perfect.');
+
+              debug(convo.extractResponses());
+
+              convo.next();
+            });
+          }
+
+          bot.startConversation(message, askAge);
+
 
     });
 
